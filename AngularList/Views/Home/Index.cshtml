@@ -1,0 +1,63 @@
+﻿@using BootstrapSupport
+@using AngularList.Models
+@model List<AngularList.Models.List>
+
+<h4>My Lists</h4>
+<table class="table table-striped">
+    <caption></caption>
+    <thead>
+        <tr>
+            <th>List Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    @{ int index = 0; }
+    @foreach (var model in Model)
+    {
+        ViewData[index.ToString()] = model;
+
+        <tr>
+                <td>
+                    @Html.ActionLink(model.Name, "List", new { id = model.Id})
+                </td>                    
+            <td>
+                <div class="btn-group">
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Action
+                       
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        @{
+ @Html.TryPartial("_actions", model)                            
+            var routevalues = model.GetIdValue();  
+
+                            @*<li>@Html.ActionLink("Edit", "Edit", routevalues)</li>*@
+
+                            <li>@Html.ActionLink("Details", "List", routevalues)</li>
+
+                            @*<li class="divider"></li>
+
+                            <li>@Html.ActionLink("Delete", "Delete", routevalues)</li>*@
+                               
+ }
+                    </ul>
+                </div>
+
+            </td>
+        </tr>
+            index++;
+    }
+
+</table>
+
+<a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal">New List</a>
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    @Html.Partial("Create", new CreateList())
+</div>
+
+@section Scripts
+{
+    <script>
+        
+    </script>
+}
