@@ -1,20 +1,9 @@
-﻿@model AngularList.Models.List
-@section head
-{
-    <style>
-        .done-true {
-            text-decoration: line-through;
-            color: grey;
-        }
-    </style>
-}
-
-<h2>@Model.Name</h2>
-<div ng-controller="TodoCtrl">
-    <span>{{remaining()}} of {{todos.length}} remaining</span>
+﻿<h2>{{list.Name}}</h2>
+<div>
+    <span>{{remaining()}} of {{list.Tasks.length}} remaining</span>
     [ <a href="" ng-click="archive()">archive</a> ]
     <ul class="unstyled">
-        <li ng-repeat="todo in todos">
+        <li ng-repeat="todo in list.Tasks">
             <label class="checkbox">
                 <input type="checkbox" ng-model="todo.Complete" ng-click="markComplete()">
                 <input type="hidden" ng-model="todo.Id" value="{{todo.Id}}"/>
@@ -22,71 +11,11 @@
             </label>
         </li>
     </ul>
-    <form ng-submit="addTodo()">
+    <form name="newTask" ng-submit="addTodo()">
         <div class="input-append">
-            <input type="text" class="span2" ng-model="todoText" size="30" placeholder="add new todo here">
-            <button class="btn btn-primary" type="submit">add</button>
+            <span ng-show="newTask.site.$error.required" class="help-inline">Required</span>
+            <input type="text" name="Label" class="span2" ng-model="todoText" size="30" placeholder="add new todo here" required>
+            <button class="btn btn-primary" type="submit" ng-disabled="newTask.$invalid">add</button>
         </div>
-
     </form>
 </div>
-
-@section Scripts
-{
-    <script>
-        function TodoCtrl($scope, $http) {
-
-            $http.get("/api/Task/?listId=@Model.Id")
-                .success(function(data, status, headers, config) {
-                    $scope.todos = data;
-                }).error(function(data, status, headers, config) {
-                    $scope.status = status;
-                });
-
-            $scope.addTodo = function() {
-                $http.post("/api/Task/?listId=@Model.Id", { "Label": $scope.todoText })
-                    .success(function(data, status, headers, config) {
-                        $scope.todos.push(data);
-                    }).error(function(data, status, headers, config) {
-                        $scope.status = status;
-                    });
-
-                $scope.todoText = '';
-            };
-
-            $scope.remaining = function() {
-                var count = 0;
-                angular.forEach($scope.todos, function(todo) {
-                    count += todo.Complete ? 0 : 1;
-                });
-                return count;
-            };
-
-            $scope.markComplete = function() {
-                $http.put("/api/Task", this.todo)
-                    .success(function(data, status, headers, config) {
-                        //$scope.todos.push({ Label: data.Label, Complete: data.Complete });
-                    }).error(function(data, status, headers, config) {
-                        $scope.status = status;
-                    });
-            };
-
-            $scope.archive = function() {
-                var oldTodos = $scope.todos;
-                $scope.todos = [];
-                angular.forEach(oldTodos, function(todo) {
-                    if (!todo.Complete) {
-                        $scope.todos.push(todo);
-                    } else {
-                        $http.delete("/api/Task/" + todo.Id)
-                            .success(function (data, status, headers, config) {
-                                //$scope.todos.push({ Label: data.Label, Complete: data.Complete });
-                            }).error(function (data, status, headers, config) {
-                                $scope.status = status;
-                            });
-                    }
-                });
-            };
-        }
-    </script>
-}

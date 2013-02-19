@@ -2,7 +2,7 @@
 @using BootstrapSupport
 @using NavigationRoutes
 <!DOCTYPE html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="listApp">
     <head>
         <meta charset="utf-8">
         <title>@ViewBag.Title</title>
@@ -21,7 +21,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="brand" href="/" title="Home">Angular Test</a>
+                    <a class="brand" href="/#/lists" title="Home">Angular Test</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
                             @Html.Navigation()
@@ -31,9 +31,8 @@
             </div>
         </div>        
         <div class="container">
-            @Html.Partial("_alerts")
-            @Html.Partial("_validationSummary")
-            @RenderBody()   
+            @RenderBody()
+            <div ng-view></div>
             <hr>
             <footer>
                 <p>&copy; Luke @System.DateTime.Now.ToString("yyyy")</p>

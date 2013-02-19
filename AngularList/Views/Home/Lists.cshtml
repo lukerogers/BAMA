@@ -1,0 +1,71 @@
+﻿<h4>My Lists</h4>
+<table class="table table-striped">
+    <caption></caption>
+    <thead>
+        <tr>
+            <th>List Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tr ng-repeat="list in lists">
+        <td>
+            <a href="#/list/{{list.Id}}">{{list.Name}}</a>
+        </td>
+        <td>
+            <div class="btn-group">
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Action
+                        <i class="caret"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#myModal" ng-click="edit()" data-toggle="modal">Edit</a> </li>
+                    <li><a href="#/list/{{list.Id}}">Details</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#confirm" ng-click="confirm()" data-toggle="modal">Delete</a> </li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<a href="#myModal" role="button" class="btn btn-primary" ng-click="new()" data-toggle="modal">New List</a>
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">{{currentList.header}}</h3>
+    </div>
+    <div class="modal-body">
+        <form id="CreateList" ng-submit="save()">
+            <label>Name</label>
+            <div class="controls">
+                <input type="text" name="Name" ng-model="currentList.Name" required />
+                <span ng-show="CreateList.site.$error.required">Required</span>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-primary" type="submit" form="CreateList" ng-disabled="CreateList.$invalid">Save</button>
+    </div>
+</div>
+
+
+<div id="confirm" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Delete</h3>
+    </div>
+    <div class="modal-body">
+        <div ng-show="currentList.preventDelete">
+            There are still Tasks on this list. Go finish them then you can delete the list!
+        </div>
+        <div ng-hide="currentList.preventDelete">
+            Are you sure you want to delete the <strong>{{currentList.Name}}</strong> list?
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-danger" ng-click="delete()" ng-disabled="currentList.preventDelete">DELETE</button>
+    </div>
+</div>
+
+

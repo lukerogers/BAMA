@@ -8,11 +8,11 @@ using Omu.ValueInjecter;
 
 namespace AngularList.Controllers
 {
-    public class TaskController : ApiController
+    public class OldTaskController : ApiController
     {
         private AngularContext Db { get; set; }
 
-        public TaskController()
+        public OldTaskController()
         {
             Db = new AngularContext();
         }
