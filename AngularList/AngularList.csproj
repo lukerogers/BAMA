@@ -357,6 +357,13 @@
     <Content Include="scripts\jstd-scenario-adapter-config.js" />
     <Content Include="scripts\jstd-scenario-adapter.js" />
     <Content Include="scripts\service.js" />
+    <Content Include="scripts\typings\angularjs\angular-cookies.d.ts" />
+    <Content Include="scripts\typings\angularjs\angular-mocks.d.ts" />
+    <Content Include="scripts\typings\angularjs\angular-resource.d.ts" />
+    <Content Include="scripts\typings\angularjs\angular-sanitize.d.ts" />
+    <Content Include="scripts\typings\angularjs\angular.d.ts" />
+    <Content Include="scripts\typings\bootstrap\bootstrap.d.ts" />
+    <Content Include="scripts\typings\jquery\jquery.d.ts" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
