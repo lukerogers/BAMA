@@ -6,9 +6,15 @@ function ListCtrl($scope, $location, Lists) {
 
     $scope.save = function () {
         $('#myModal').modal('hide');//THIS IS BAD!!!
-        Lists.add($scope.currentList, function (data) {
-            $location.path('/list/' + data.Id);
-        });
+        if ($scope.currentList.id === null) {
+            Lists.add($scope.currentList, function(data) {
+                $location.path('/list/' + data.Id);
+            });
+        } else {
+            Lists.save($scope.currentList, function (data) {
+                $location.path('/list/' + data.Id);
+            });
+        }
     };
 
     $scope.confirm = function() {
@@ -16,7 +22,8 @@ function ListCtrl($scope, $location, Lists) {
         $scope.currentList.preventDelete = this.list.Tasks.length > 0;
     };
     
-    $scope.delete = function() {
+    $scope.delete = function () {
+        $('#confirm').modal('hide');
         var toDeleteId = $scope.currentList.Id;
         Lists.delete({ id: toDeleteId });
         var oldLists = $scope.lists;

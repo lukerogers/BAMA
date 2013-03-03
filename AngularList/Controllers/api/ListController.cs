@@ -37,9 +37,9 @@ namespace AngularList.Controllers.api
         }
 
         // PUT api/list/5
-        public void Put(int id, [FromBody]List value)
+        public void Put(List value)
         {
-            var list = _db.Lists.FirstOrDefault(x => x.Id == id);
+            var list = _db.Lists.FirstOrDefault(x => x.Id == value.Id);
             list.InjectFrom(value);
             _db.SaveChanges();
         }

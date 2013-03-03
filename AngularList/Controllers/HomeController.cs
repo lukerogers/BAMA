@@ -1,13 +1,11 @@
 ﻿using System.Web.Mvc;
-using BootstrapMvcSample.Controllers;
 
 namespace AngularList.Controllers
 {
-    public class HomeController : BootstrapBaseController
+    public class HomeController : Controller
     {
         public ActionResult Index()
         {
-            //return View(Db.Lists.ToList());
             return View();
         }
 

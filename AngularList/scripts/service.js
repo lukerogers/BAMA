@@ -8,7 +8,8 @@ angular.module('listServices', ['ngResource']).factory('Lists', function ($resou
             method: 'GET',
             isArray: true
         },
-        add: { method: 'POST' }
+        add: { method: 'POST' },
+        save: { method: 'PUT' }
     });
 });
 
